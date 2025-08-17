@@ -32,9 +32,16 @@ Using Axios with Async/Await, Callbacks, and Promises:
 ---
 
 ## 🛠️ Installation & Setup
+  bash  # 📚 Express Book Review Application (IBM Project)
 
 1. Clone the repository:
-   ```bash  # 📚 Express Book Review Application (IBM Project)
+   ```bash
+   git clone https://github.com/srivallinalla12/Express_Book_Review_IBM.git
+   cd Express_Book_Review_Application_IBM/final_project
+
+   git clone 
+   cd Express_Book_Review_IBM/final_project
+
 
 This is a Node.js + Express backend project developed as part of the **IBM Back-End Development Course** on Coursera.  
 It implements routes for **general users** and **registered users**, along with client scripts using **Axios** for testing.  
@@ -67,12 +74,3 @@ Using Axios with Async/Await, Callbacks, and Promises:
 
 ---
 
-## 🛠️ Installation & Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/Express_Book_Review_Application_IBM.git
-   cd Express_Book_Review_Application_IBM/final_project
-
-   git clone 
-   cd Express_Book_Review_Application_IBM/final_project
