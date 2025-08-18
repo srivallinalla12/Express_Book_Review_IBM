@@ -19,6 +19,8 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
     let user = users.find(u => u.username === username && u.password === password);
     if (user) {
+        // Save username in session
+        req.session.authorization = { username: user.username };
         return res.status(200).json({ message: "Login successful" });
     } else {
         return res.status(401).json({ message: "Invalid credentials" });
@@ -30,9 +32,15 @@ router.put('/auth/review/:isbn', (req, res) => {
     const isbn = req.params.isbn;
     const review = req.body.review;
 
+    if (!req.session.authorization || !req.session.authorization.username) {
+        return res.status(403).json({ message: "User not logged in" });
+    }
+
+    const username = req.session.authorization.username;
+
     if (books[isbn]) {
         books[isbn].reviews = books[isbn].reviews || {};
-        books[isbn].reviews["user1"] = review; // hardcoded username for now
+        books[isbn].reviews[username] = review; // use logged-in username
         return res.status(200).json({ message: "Review added/modified successfully" });
     }
     return res.status(404).json({ message: "Book not found" });
@@ -42,8 +50,14 @@ router.put('/auth/review/:isbn', (req, res) => {
 router.delete('/auth/review/:isbn', (req, res) => {
     const isbn = req.params.isbn;
 
-    if (books[isbn] && books[isbn].reviews && books[isbn].reviews["user1"]) {
-        delete books[isbn].reviews["user1"];
+    if (!req.session.authorization || !req.session.authorization.username) {
+        return res.status(403).json({ message: "User not logged in" });
+    }
+
+    const username = req.session.authorization.username;
+
+    if (books[isbn] && books[isbn].reviews && books[isbn].reviews[username]) {
+        delete books[isbn].reviews[username];
         return res.status(200).json({ message: "Review deleted successfully" });
     }
     return res.status(404).json({ message: "No review found to delete" });
